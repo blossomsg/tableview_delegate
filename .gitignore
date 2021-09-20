@@ -1,2 +1,5 @@
 .idea/
 __pycache__/
+append_values_in_json.py
+docs.txt
+example_standarditemmodel.py
