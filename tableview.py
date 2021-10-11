@@ -1,7 +1,6 @@
 from ui.table_view_delgate import Ui_Form
 from tablemodel import TableModel
 from PyQt5 import QtWidgets
-from PyQt5 import QtGui
 import sys
 import json
 
@@ -19,10 +18,15 @@ class TableView(QtWidgets.QWidget):
 		super(TableView, self).__init__()
 		self.ui = Ui_Form()
 		self.ui.setupUi(self)
+		# fetch the col header names
 		self.table_col_names = [col for col in config.keys()]
-		self.table_row_names = [row for row in range(5)]
-		self.empty = [["", ""], ["", ""]]
-		self.model = TableModel(self.table_col_names, self.table_row_names, self.empty)
+		# creating row numbers with range
+		self.table_row_names = [row for row in range(10)]
+		# setup the table header rows and column names, and row and column count
+		self.model = TableModel(head_columns_names=self.table_col_names, head_rows_names=self.table_row_names,
+								table_rows_count=5, table_columns_count=5)
+		self.model.insertRow(0)  # position of the inserted row
+		self.model.insertColumn(0)  # position of the inserted column
 		self.ui.tableView.setModel(self.model)
 
 
