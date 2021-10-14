@@ -1,8 +1,11 @@
 from ui.table_view_delgate import Ui_Form
 from tablemodel import TableModel
 from PyQt5 import QtWidgets
+from PyQt5 import QtCore
+from PyQt5 import QtGui
 import sys
 import json
+
 
 with open('configuration_file.json') as data:
 	config = json.load(data)
@@ -28,6 +31,16 @@ class TableView(QtWidgets.QWidget):
 		self.model.insertRow(0)  # position of the inserted row
 		self.model.insertColumn(0)  # position of the inserted column
 		self.ui.tableView.setModel(self.model)
+		# signal to
+		self.ui.tableView.clicked.connect(self.index_selection)
+
+	# caveat: only one row value can be returned at a time. for loop can be added later.
+	# return the selected value from the tableview
+	def index_selection(self):
+		index = self.ui.tableView.selectedIndexes()
+		value = index[0].data()
+		# print(value)
+		return value
 
 
 app = QtWidgets.QApplication(sys.argv)
@@ -36,5 +49,6 @@ window = TableView()
 window.show()
 sys.exit(app.exec_())
 
+# https://forum.qt.io/topic/76087/get-content-of-cell-from-qtableview/6
 # https://www.pythonguis.com/faq/editing-pyqt-tableview/
 # https://stackoverflow.com/questions/25940413/how-to-initialize-qabstracttablemodel-with-an-empty-2d-array-while-preserving-he

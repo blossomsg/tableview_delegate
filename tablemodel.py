@@ -8,14 +8,16 @@ class TableModel(QtCore.QAbstractTableModel):
 		self.headColStringsList = head_columns_names
 		self.headRowStringsList = head_rows_names
 		self.data = []  # this is just an empty data to use for row
-		self.data_column = []  # this is just an empty data to use for column because
+		self.data_column = []  # this is just an empty data to use for column
 		self.table_rows_count = table_rows_count
 		self.table_columns_count = table_columns_count
 
-	def rowCount(self, parent=QtCore.QModelIndex):
+	def rowCount(self, index=QtCore.QModelIndex):
+		# as per the docs this method should return 0 if used for table
 		return len(self.data)
 
-	def columnCount(self, parent=QtCore.QModelIndex()):
+	def columnCount(self, index=QtCore.QModelIndex()):
+		# as per the docs this method should return 0 if used for table
 		return len(self.data_column)
 
 	def data(self, index=QtCore.QModelIndex, role=QtCore.Qt.DisplayRole):
@@ -47,7 +49,7 @@ class TableModel(QtCore.QAbstractTableModel):
 		self.beginInsertRows(parent, position, position + rows - 1)
 		for row in range(0, rows):
 			# mention rows as per the column count
-			self.data.insert(position, ["", "", "", "",""])
+			self.data.insert(position, ["", "", "", "", ""])
 		self.endInsertRows()
 		return True
 
@@ -61,3 +63,6 @@ class TableModel(QtCore.QAbstractTableModel):
 			self.data_column.insert(position, [])
 		self.endInsertColumns()
 		return True
+
+# https://forum.qt.io/topic/76087/get-content-of-cell-from-qtableview/4
+# https://doc.qt.io/qtforpython/overviews/model-view-programming.html
